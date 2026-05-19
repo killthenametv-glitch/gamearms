@@ -61,10 +61,9 @@
                     <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_pushups_gamer-aQQaGHtcqaERfTdz4pqK44.webp" alt="Отжимания">
                     <h3>Отжимания</h3>
                     <div class="exercise-controls">
-                        <label>Повторений за раунд:</label>
                         <div class="slider-group">
+                            <span class="slider-value" id="pushups-value">5</span>
                             <input type="range" id="pushups-slider" min="1" max="20" value="5" class="slider">
-                            <input type="number" id="pushups-input" min="1" max="20" value="5" class="number-input">
                         </div>
                     </div>
                 </div>
@@ -74,10 +73,9 @@
                     <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_pullups_gamer-gKJwpcjwW76JsmWhk9mGFq.webp" alt="Подтягивания">
                     <h3>Подтягивания</h3>
                     <div class="exercise-controls">
-                        <label>Повторений за раунд:</label>
                         <div class="slider-group">
+                            <span class="slider-value" id="pullups-value">5</span>
                             <input type="range" id="pullups-slider" min="1" max="20" value="5" class="slider">
-                            <input type="number" id="pullups-input" min="1" max="20" value="5" class="number-input">
                         </div>
                     </div>
                 </div>
@@ -87,10 +85,9 @@
                     <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_squats_gamer-L8jawZKGDcFUuuM6Jrobu2.webp" alt="Приседания">
                     <h3>Приседания</h3>
                     <div class="exercise-controls">
-                        <label>Повторений за раунд:</label>
                         <div class="slider-group">
+                            <span class="slider-value" id="squats-value">5</span>
                             <input type="range" id="squats-slider" min="1" max="20" value="5" class="slider">
-                            <input type="number" id="squats-input" min="1" max="20" value="5" class="number-input">
                         </div>
                     </div>
                 </div>
@@ -100,17 +97,15 @@
                     <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_plank_gamer-epXvGoiRqkYLUgfwfFhwyv.webp" alt="Планка">
                     <h3>Планка</h3>
                     <div class="exercise-controls">
-                        <label>Секунд за раунд:</label>
                         <div class="slider-group">
+                            <span class="slider-value" id="plank-value">30<span class="unit">сек</span></span>
                             <input type="range" id="plank-slider" min="10" max="60" value="30" step="5" class="slider">
-                            <input type="number" id="plank-input" min="10" max="60" value="30" step="5" class="number-input">
-                            <span class="unit">сек</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="selectedExercise" class="selected-exercise"></div>
+
 
             <div class="button-group">
                 <button class="btn-back" onclick="goToStep(2)">← Назад</button>

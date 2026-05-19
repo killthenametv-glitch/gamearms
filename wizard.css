@@ -203,16 +203,6 @@
     display: block;
 }
 
-.exercise-controls label {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: none;
-    letter-spacing: normal;
-    margin-bottom: 8px;
-}
-
 .slider-group {
     display: flex;
     gap: 8px;
@@ -258,43 +248,22 @@
     transform: scale(1.2);
 }
 
-.number-input {
-    width: 50px;
-    padding: 6px 8px;
-    background-color: rgba(240, 224, 192, 0.1);
-    border: 1px solid var(--text-gold);
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: var(--text-cream);
+.slider-value {
+    display: block;
     text-align: center;
-}
-
-.number-input:focus {
-    outline: none;
-    background-color: rgba(240, 224, 192, 0.15);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-gold);
+    margin-bottom: 8px;
+    min-height: 24px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .unit {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* Выбранное упражнение */
-.selected-exercise {
-    text-align: center;
-    padding: 20px;
-    background-color: rgba(212, 149, 42, 0.1);
-    border: 2px solid var(--text-gold);
-    border-radius: 8px;
-    margin-bottom: 30px;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-cream);
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--text-gold);
+    margin-left: 4px;
 }
 
 /* Матчи */

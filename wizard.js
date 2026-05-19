@@ -159,63 +159,31 @@ function selectExercise(exerciseName) {
     // Сохранить выбор
     wizardState.exercise = exerciseName;
 
-    // Получить значение
-    let value;
-    if (exerciseName === 'plank') {
-        value = document.getElementById('plank-input').value;
-    } else {
-        value = document.getElementById(`${exerciseName}-input`).value;
-    }
-    wizardState.exerciseValue = value;
+    // Получить значение из слайдера
+    const slider = document.getElementById(`${exerciseName}-slider`);
+    wizardState.exerciseValue = slider.value;
 
-    // Показать выбранное упражнение
-    updateSelectedExerciseDisplay();
-
-    // Синхронизировать слайдеры и инпуты
+    // Синхронизировать слайдеры
     syncSliderAndInput(exerciseName);
-}
-
-function updateSelectedExerciseDisplay() {
-    const exerciseNames = {
-        pushups: 'Отжимания',
-        pullups: 'Подтягивания',
-        squats: 'Приседания',
-        plank: 'Планка'
-    };
-
-    const unit = wizardState.exercise === 'plank' ? 'сек' : 'повторений';
-    const display = `✓ ${exerciseNames[wizardState.exercise]} - ${wizardState.exerciseValue} ${unit} за раунд`;
-
-    document.getElementById('selectedExercise').textContent = display;
 }
 
 function syncSliderAndInput(exerciseName) {
     const sliderId = `${exerciseName}-slider`;
-    const inputId = `${exerciseName}-input`;
+    const valueId = `${exerciseName}-value`;
 
     const slider = document.getElementById(sliderId);
-    const input = document.getElementById(inputId);
+    const valueDisplay = document.getElementById(valueId);
 
-    if (!slider || !input) return;
+    if (!slider || !valueDisplay) return;
 
-    // Синхронизировать слайдер и инпут
+    // Обновлять дисплей значения при движении слайдера
     slider.addEventListener('input', (e) => {
-        input.value = e.target.value;
-        wizardState.exerciseValue = e.target.value;
-        updateSelectedExerciseDisplay();
-    });
-
-    input.addEventListener('input', (e) => {
-        let value = parseInt(e.target.value);
         if (exerciseName === 'plank') {
-            value = Math.max(10, Math.min(60, value));
+            valueDisplay.innerHTML = `${e.target.value}<span class="unit">сек</span>`;
         } else {
-            value = Math.max(1, Math.min(20, value));
+            valueDisplay.textContent = e.target.value;
         }
-        e.target.value = value;
-        slider.value = value;
-        wizardState.exerciseValue = value;
-        updateSelectedExerciseDisplay();
+        wizardState.exerciseValue = e.target.value;
     });
 }
 
@@ -310,7 +278,7 @@ function startGame() {
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', () => {
-    // Синхронизировать слайдеры и инпуты для всех упражнений
+    // Синхронизировать слайдеры для всех упражнений
     ['pushups', 'pullups', 'squats', 'plank'].forEach(exercise => {
         syncSliderAndInput(exercise);
     });
