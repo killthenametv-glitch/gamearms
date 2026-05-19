@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка игры - CS Round Punisher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="wizard.css">
+</head>
+<body>
+    <div class="wizard-container">
+        <!-- Прогресс-бар -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Шаг 1: Игрок 1 -->
+        <div class="wizard-step active" id="step1">
+            <h2>Шаг 1: Выбери первого игрока</h2>
+            <div class="form-group">
+                <label for="player1Name">Имя игрока 1:</label>
+                <input type="text" id="player1Name" placeholder="Введи имя" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="player1Team">Команда игрока 1:</label>
+                <input type="text" id="player1Team" placeholder="Поиск команды (HLTV)" class="input-field">
+                <div id="player1TeamList" class="team-list"></div>
+            </div>
+            <button class="btn-next" onclick="goToStep(2)">Далее →</button>
+        </div>
+
+        <!-- Шаг 2: Игрок 2 -->
+        <div class="wizard-step" id="step2">
+            <h2>Шаг 2: Выбери второго игрока</h2>
+            <div class="form-group">
+                <label for="player2Name">Имя игрока 2:</label>
+                <input type="text" id="player2Name" placeholder="Введи имя" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="player2Team">Команда игрока 2:</label>
+                <input type="text" id="player2Team" placeholder="Поиск команды (HLTV)" class="input-field">
+                <div id="player2TeamList" class="team-list"></div>
+            </div>
+            <div class="button-group">
+                <button class="btn-back" onclick="goToStep(1)">← Назад</button>
+                <button class="btn-next" onclick="goToStep(3)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- Шаг 3: Наказание -->
+        <div class="wizard-step" id="step3">
+            <h2>Шаг 3: Выбери наказание</h2>
+            <p class="step-description">Выбери одно упражнение за каждый проигранный раунд</p>
+            
+            <div class="exercises-grid">
+                <!-- Отжимания -->
+                <div class="exercise-card" onclick="selectExercise('pushups')">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_pushups-DQ98PcDv8WUcwRp5kusWH9.webp" alt="Отжимания">
+                    <h3>Отжимания</h3>
+                    <div class="exercise-controls">
+                        <label>Повторений за раунд:</label>
+                        <div class="slider-group">
+                            <input type="range" id="pushups-slider" min="1" max="20" value="5" class="slider">
+                            <input type="number" id="pushups-input" min="1" max="20" value="5" class="number-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Подтягивания -->
+                <div class="exercise-card" onclick="selectExercise('pullups')">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_pullups-Xoyohq8ZLuxX2Ya9UxwAph.webp" alt="Подтягивания">
+                    <h3>Подтягивания</h3>
+                    <div class="exercise-controls">
+                        <label>Повторений за раунд:</label>
+                        <div class="slider-group">
+                            <input type="range" id="pullups-slider" min="1" max="20" value="5" class="slider">
+                            <input type="number" id="pullups-input" min="1" max="20" value="5" class="number-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Приседания -->
+                <div class="exercise-card" onclick="selectExercise('squats')">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_squats-RGKSCfhqvAFhiJJxQ7dJpw.webp" alt="Приседания">
+                    <h3>Приседания</h3>
+                    <div class="exercise-controls">
+                        <label>Повторений за раунд:</label>
+                        <div class="slider-group">
+                            <input type="range" id="squats-slider" min="1" max="20" value="5" class="slider">
+                            <input type="number" id="squats-input" min="1" max="20" value="5" class="number-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Планка -->
+                <div class="exercise-card" onclick="selectExercise('plank')">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663669707035/TWJa9x9JvpZZBreTATnPgM/exercise_plank-nMBS6UNFwSrMk5EWHVShjC.webp" alt="Планка">
+                    <h3>Планка</h3>
+                    <div class="exercise-controls">
+                        <label>Секунд за раунд:</label>
+                        <div class="slider-group">
+                            <input type="range" id="plank-slider" min="10" max="60" value="30" step="5" class="slider">
+                            <input type="number" id="plank-input" min="10" max="60" value="30" step="5" class="number-input">
+                            <span class="unit">сек</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selectedExercise" class="selected-exercise"></div>
+
+            <div class="button-group">
+                <button class="btn-back" onclick="goToStep(2)">← Назад</button>
+                <button class="btn-next" onclick="goToStep(4)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- Шаг 4: Матч -->
+        <div class="wizard-step" id="step4">
+            <h2>Шаг 4: Выбери матч</h2>
+            <p class="step-description">Поиск матча между выбранными командами</p>
+            
+            <div class="matches-container" id="matchesContainer">
+                <p class="loading">Загрузка матчей...</p>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-back" onclick="goToStep(3)">← Назад</button>
+                <button class="btn-start" onclick="startGame()">Начать игру 🎮</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="api-config.js"></script>
+    <script src="wizard.js"></script>
+</body>
+</html>
