@@ -19,20 +19,28 @@ const TOTAL_STEPS = 4;
 function goToStep(stepNumber, skipValidation = false) {
     // Валидация текущего шага перед переходом вперед (но не при возврате назад)
     const currentStep = getCurrentStep();
-    if (!skipValidation && stepNumber > currentStep) {
+    
+    // При возврате назад всегда разрешаем переход без валидации
+    if (stepNumber < currentStep) {
+        clearStepErrors();
+    } 
+    // При переходе вперед проверяем валидацию
+    else if (stepNumber > currentStep && !skipValidation) {
         if (!validateStep(currentStep)) {
             showStepError(currentStep);
             return;
         }
-        clearStepErrors();
-    } else if (stepNumber < currentStep) {
-        // При возврате назад просто очищаем ошибки
         clearStepErrors();
     }
 
     // Скрыть все шаги
     document.querySelectorAll('.wizard-step').forEach(step => {
         step.classList.remove('active');
+    });
+
+    // Очистить фокус со всех элементов чтобы убрать артефакты
+    document.querySelectorAll('button, input, .exercise-card, .match-card').forEach(el => {
+        el.blur();
     });
 
     // Показать нужный шаг
