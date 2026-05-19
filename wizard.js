@@ -16,13 +16,19 @@ let wizardState = {
 const TOTAL_STEPS = 4;
 
 // Переход между шагами
-function goToStep(stepNumber) {
-    // Валидация текущего шага перед переходом
-    if (!validateStep(getCurrentStep())) {
-        showStepError(getCurrentStep());
-        return;
+function goToStep(stepNumber, skipValidation = false) {
+    // Валидация текущего шага перед переходом вперед (но не при возврате назад)
+    const currentStep = getCurrentStep();
+    if (!skipValidation && stepNumber > currentStep) {
+        if (!validateStep(currentStep)) {
+            showStepError(currentStep);
+            return;
+        }
+        clearStepErrors();
+    } else if (stepNumber < currentStep) {
+        // При возврате назад просто очищаем ошибки
+        clearStepErrors();
     }
-    clearStepErrors();
 
     // Скрыть все шаги
     document.querySelectorAll('.wizard-step').forEach(step => {
@@ -43,6 +49,7 @@ function goToStep(stepNumber) {
 
 function getCurrentStep() {
     const activeStep = document.querySelector('.wizard-step.active');
+    if (!activeStep) return 1;
     return parseInt(activeStep.id.replace('step', ''));
 }
 
@@ -165,6 +172,9 @@ function selectExercise(exerciseName) {
 
     // Синхронизировать слайдеры
     syncSliderAndInput(exerciseName);
+    
+    // Очистить ошибки валидации при выборе упражнения
+    clearStepErrors();
 }
 
 function syncSliderAndInput(exerciseName) {
@@ -283,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
         syncSliderAndInput(exercise);
     });
 
-    // Показать первый шаг
-    goToStep(1);
+    // Показать первый шаг без валидации
+    const step1 = document.getElementById('step1');
+    step1.classList.add('active');
+    updateProgressBar(1);
 });
