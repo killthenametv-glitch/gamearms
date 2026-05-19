@@ -19,9 +19,10 @@ const TOTAL_STEPS = 4;
 function goToStep(stepNumber) {
     // Валидация текущего шага перед переходом
     if (!validateStep(getCurrentStep())) {
-        alert('Пожалуйста, заполните все поля');
+        showStepError(getCurrentStep());
         return;
     }
+    clearStepErrors();
 
     // Скрыть все шаги
     document.querySelectorAll('.wizard-step').forEach(step => {
@@ -48,6 +49,69 @@ function getCurrentStep() {
 function updateProgressBar(stepNumber) {
     const progress = (stepNumber / TOTAL_STEPS) * 100;
     document.getElementById('progressFill').style.width = progress + '%';
+}
+
+// Функция для отображения ошибок
+function showStepError(stepNumber) {
+    clearStepErrors();
+    switch (stepNumber) {
+        case 1:
+            const player1Name = document.getElementById('player1Name');
+            const player1Team = document.getElementById('player1Team');
+            if (!player1Name.value.trim()) {
+                showFieldError('player1Name', 'Введите имя игрока');
+            }
+            if (!player1Team.value.trim()) {
+                showFieldError('player1Team', 'Выберите команду');
+            }
+            break;
+        case 2:
+            const player2Name = document.getElementById('player2Name');
+            const player2Team = document.getElementById('player2Team');
+            if (!player2Name.value.trim()) {
+                showFieldError('player2Name', 'Введите имя игрока');
+            }
+            if (!player2Team.value.trim()) {
+                showFieldError('player2Team', 'Выберите команду');
+            }
+            break;
+        case 3:
+            if (!wizardState.exercise) {
+                showFieldError('exercisesGrid', 'Выберите упражнение');
+            }
+            break;
+        case 4:
+            if (!wizardState.match) {
+                showFieldError('matchesContainer', 'Выберите матч');
+            }
+            break;
+    }
+}
+
+function showFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+    
+    // Создать контейнер ошибки если его нет
+    let errorElement = field.parentElement.querySelector('.field-error');
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'field-error';
+        field.parentElement.appendChild(errorElement);
+    }
+    
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    field.classList.add('input-error');
+}
+
+function clearStepErrors() {
+    document.querySelectorAll('.field-error').forEach(error => {
+        error.style.display = 'none';
+    });
+    document.querySelectorAll('.input-error').forEach(input => {
+        input.classList.remove('input-error');
+    });
 }
 
 // Валидация шагов
@@ -233,7 +297,7 @@ function getTimeDisplay(date) {
 // Начать игру
 function startGame() {
     if (!wizardState.match) {
-        alert('Выберите матч');
+        showStepError(4);
         return;
     }
 
